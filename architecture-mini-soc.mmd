@@ -1,0 +1,34 @@
+flowchart LR
+    subgraph LAB[On-premises security lab]
+        K[Kali Linux<br/>controlled test source]
+        D[DMZ target<br/>isolated test server]
+        W[Windows endpoint<br/>Wazuh Agent + Sysmon]
+        S[Security Onion<br/>Suricata network sensor]
+        K -->|authorized test traffic| D
+        K -->|authorized test traffic| W
+        D --> S
+        W -->|host events| S
+        S -->|network events| T
+        W -->|endpoint logs| T
+    end
+
+    subgraph AZ[Azure SOC core]
+        T[Wazuh Manager<br/>collection and correlation]
+        E[ELK Stack<br/>search and dashboards]
+        H[TheHive<br/>case and alert management]
+        I[Isolation Forest<br/>optional anomaly analysis]
+        T --> E
+        T -->|high-severity alert via REST API| H
+        S --> T
+        T --> I
+    end
+
+    K -.->|segmented lab-to-cloud link| T
+    AZ --> Z[Zero Trust controls<br/>identity, least privilege,<br/>VNet, NSG, limited exposure]
+
+    classDef cloud fill:#e8f1ff,stroke:#2563eb,color:#111827;
+    classDef lab fill:#ecfdf5,stroke:#059669,color:#111827;
+    classDef control fill:#fff7ed,stroke:#ea580c,color:#111827;
+    class AZ,T,E,H,I cloud;
+    class LAB,K,D,W,S lab;
+    class Z control;

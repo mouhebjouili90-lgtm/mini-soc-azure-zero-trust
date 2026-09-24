@@ -22,6 +22,8 @@ The environment separates three logical areas:
 
 The cloud portion uses an Azure Virtual Network and Network Security Groups to segment components and control communication. Microsoft Entra ID provides the identity layer. The architecture was designed with Azure virtual CPU constraints in mind.
 
+See the sanitized [architecture overview](ARCHITECTURE.md) and the accompanying [architecture diagram](architecture-mini-soc.png).
+
 ## Security components
 
 The project integrates the following components:
@@ -37,6 +39,8 @@ The tools form a workflow from identity and network isolation to telemetry colle
 ## Validation work
 
 The architecture was validated through controlled tests launched from the local laboratory. The validation checked that host and network events reached the monitoring components, that events could be analyzed and correlated, and that TheHive could receive automated incident alerts through API integration.
+
+The report-derived [validation matrix](VALIDATION.md) records the documented network, endpoint, anomaly-analysis, and TheHive integration tests.
 
 No quantitative performance claims are made because the number of monitored systems, exact attack scenarios, alert rules, and benchmark measurements were not recorded in the public project documentation.
 
